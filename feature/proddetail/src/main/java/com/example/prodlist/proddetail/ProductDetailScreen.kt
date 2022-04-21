@@ -14,7 +14,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.prodlist.aosutil.navigation.LocalNavController
 import com.example.prodlist.aosutil.toast.showToast
 import com.example.prodlist.designsys.divider.RowDivider
-import com.example.prodlist.designsys.transition.SlideToLeft
 import com.example.prodlist.proddetail.noproduct.NoProductContract
 import com.example.prodlist.proddetail.noproduct.NoProductModal
 import com.example.prodlist.proddetail.noproduct.NoProductViewModel
@@ -62,26 +61,23 @@ private fun ProductDetailScreen(
     state: ProductDetailContract.State,
     onEvent: (ProductDetailContract.Event) -> Unit,
 ) {
-    SlideToLeft(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
-        visible = true,
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TopBar(
-                productName = state.productName,
-                onBackClicked = { onEvent(ProductDetailContract.Event.OnBackClicked) },
-            )
+        TopBar(
+            productName = state.productName,
+            onBackClicked = { onEvent(ProductDetailContract.Event.OnBackClicked) },
+        )
 
-            RowDivider()
+        RowDivider()
 
-            Content(
-                price = state.price,
-                liked = state.liked,
-                onLikeClicked = { onEvent(ProductDetailContract.Event.OnLikeClicked) }
-            )
-        }
+        Content(
+            price = state.price,
+            liked = state.liked,
+            onLikeClicked = { onEvent(ProductDetailContract.Event.OnLikeClicked) }
+        )
     }
 }
 

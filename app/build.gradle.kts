@@ -78,4 +78,7 @@ dependencies {
     implementation(Deps.Jetpack.COMPOSE_FOUNDATION)
     implementation(Deps.Jetpack.COMPOSE_MATERIAL)
     implementation(Deps.Jetpack.COMPOSE_ANIMATION)
+
+    // Accompanist
+    implementation(Deps.Accompanist.NAVIGATION_COMPOSE_ANIMATION)
 }

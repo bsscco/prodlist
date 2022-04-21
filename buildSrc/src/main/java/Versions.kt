@@ -43,4 +43,6 @@ object Versions {
         const val OKHTTP = "4.9.1"
         const val LOGGING_INTERCEPTOR = "4.9.0"
     }
+
+    const val ACCOMPANIST = "0.24.7-alpha"
 }

@@ -75,4 +75,8 @@ object Deps {
         const val CORE = "com.squareup.okhttp3:okhttp:${Versions.Okhttp.OKHTTP}"
         const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.Okhttp.LOGGING_INTERCEPTOR}"
     }
+
+    object Accompanist {
+        const val NAVIGATION_COMPOSE_ANIMATION = "com.google.accompanist:accompanist-navigation-animation:${Versions.ACCOMPANIST}"
+    }
 }
