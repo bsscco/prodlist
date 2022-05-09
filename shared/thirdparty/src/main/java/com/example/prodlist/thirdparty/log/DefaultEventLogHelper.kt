@@ -1,4 +1,4 @@
-package com.jeongyookgak.quickflex.thirdparty.log
+package com.example.prodlist.thirdparty.log
 
 import android.annotation.SuppressLint
 import android.content.Context

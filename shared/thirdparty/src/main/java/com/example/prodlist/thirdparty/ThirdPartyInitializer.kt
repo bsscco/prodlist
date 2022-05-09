@@ -1,4 +1,4 @@
-package com.jeongyookgak.quickflex.thirdparty
+package com.example.prodlist.thirdparty
 
 interface ThirdPartyInitializer {
 

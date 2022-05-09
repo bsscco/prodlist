@@ -1,10 +1,10 @@
-package com.jeongyookgak.quickflex.thirdparty
+package com.example.prodlist.thirdparty
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.jeongyookgak.quickflex.thirdparty.crash.CrashlyticsInitializer
-import com.jeongyookgak.quickflex.thirdparty.log.FirebaseAnalyticsInitializer
+import com.example.prodlist.thirdparty.crash.CrashlyticsInitializer
+import com.example.prodlist.thirdparty.log.FirebaseAnalyticsInitializer
 import javax.inject.Inject
 
 internal class DefaultThirdPartyInitializer @Inject constructor(

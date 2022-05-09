@@ -1,4 +1,4 @@
-package com.jeongyookgak.quickflex.thirdparty.crash
+package com.example.prodlist.thirdparty.crash
 
 import com.example.prodlist.ktutil.NoAction
 import javax.inject.Inject

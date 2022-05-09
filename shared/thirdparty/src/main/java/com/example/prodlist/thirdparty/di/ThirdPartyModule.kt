@@ -1,11 +1,11 @@
-package com.jeongyookgak.quickflex.thirdparty.di
+package com.example.prodlist.thirdparty.di
 
 import com.example.prodlist.ktutil.log.CrashReportHelper
 import com.example.prodlist.ktutil.log.EventLogHelper
-import com.jeongyookgak.quickflex.thirdparty.DefaultThirdPartyInitializer
-import com.jeongyookgak.quickflex.thirdparty.ThirdPartyInitializer
-import com.jeongyookgak.quickflex.thirdparty.crash.DefaultCrashReportHelper
-import com.jeongyookgak.quickflex.thirdparty.log.DefaultEventLogHelper
+import com.example.prodlist.thirdparty.DefaultThirdPartyInitializer
+import com.example.prodlist.thirdparty.ThirdPartyInitializer
+import com.example.prodlist.thirdparty.crash.DefaultCrashReportHelper
+import com.example.prodlist.thirdparty.log.DefaultEventLogHelper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

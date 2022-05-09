@@ -1,4 +1,4 @@
-package com.jeongyookgak.quickflex.thirdparty.log
+package com.example.prodlist.thirdparty.log
 
 import com.example.prodlist.ktutil.NoAction
 import javax.inject.Inject
