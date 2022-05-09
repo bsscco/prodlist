@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,24 +16,13 @@ internal fun SearchBox(
     keyword: String,
     onKeywordChanged: (String) -> Unit,
 ) {
-    var text by remember { mutableStateOf(keyword) }
-    var latestText by remember { mutableStateOf(keyword) }
-
-    if (latestText != keyword) {
-        latestText = keyword
-        text = keyword
-    }
-
     TextField(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        value = text,
+        value = keyword,
         textStyle = LocalTextStyle.current.copy(color = Color.Black),
-        onValueChange = { input ->
-            text = input
-            onKeywordChanged(input)
-        },
+        onValueChange = { input -> onKeywordChanged(input) },
         placeholder = { Text("검색어를 입력해주세요.") },
         singleLine = true,
     )

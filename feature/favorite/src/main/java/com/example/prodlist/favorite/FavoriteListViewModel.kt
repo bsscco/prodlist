@@ -97,6 +97,7 @@ class FavoriteListViewModel @Inject constructor(
     private fun handleKeywordChanged(keyword: String) {
         keywordFlow.value = keyword
         savedState[KEYWORD] = keyword
+        reducer.setState { copy(keyword = keyword) }
     }
 
     private fun handleProductClicked(productKey: String) {
