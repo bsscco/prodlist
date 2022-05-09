@@ -1,7 +1,7 @@
 package com.example.prodlist.app
 
 import android.app.Application
-import com.jeongyookgak.quickflex.thirdparty.ThirdPartyInitializer
+import com.example.prodlist.thirdparty.ThirdPartyInitializer
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
