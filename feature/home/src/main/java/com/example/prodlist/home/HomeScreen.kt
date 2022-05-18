@@ -6,60 +6,37 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.prodlist.aosutil.navigation.LocalNavController
-import com.example.prodlist.aosutil.toast.showToast
 import com.example.prodlist.designsys.divider.RowDivider
 import com.example.prodlist.designsys.theme.ProdListTheme
 import com.example.prodlist.favorite.FavoriteList
 import com.example.prodlist.favorite.FavoriteListContract
 import com.example.prodlist.favorite.FavoriteListViewModel
-import com.example.prodlist.navigation.Uris
 import com.example.prodlist.prodlist.ProductList
 import com.example.prodlist.prodlist.ProductListContract
 import com.example.prodlist.prodlist.ProductListViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun HomeScreen() {
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val productListViewModel = hiltViewModel<ProductListViewModel>()
     val favoriteListViewModel = hiltViewModel<FavoriteListViewModel>()
-    val context = LocalContext.current
-    val navController = LocalNavController.current
-
-    LaunchedEffect(true) {
-        productListViewModel.effectFlow.collect { effect ->
-            when (effect) {
-                is ProductListContract.Effect.NavigateToProductDetail -> navController.navigate("${Uris.ProdList.PRODUCT_DETAIL}?key=${effect.productKey}".toUri())
-                is ProductListContract.Effect.ShowErrorToast -> context.showToast(effect.message)
-            }
-        }
-    }
-
-    LaunchedEffect(true) {
-        favoriteListViewModel.effectFlow.collect { effect ->
-            when (effect) {
-                is FavoriteListContract.Effect.NavigateToProductDetail -> navController.navigate("${Uris.ProdList.PRODUCT_DETAIL}?key=${effect.productKey}".toUri())
-                is FavoriteListContract.Effect.ShowErrorToast -> context.showToast(effect.message)
-            }
-        }
-    }
 
     HomeScreen(
         homeState = homeViewModel.stateFlow.collectAsState().value,
         onHomeEvent = homeViewModel.eventHandler,
         productListState = productListViewModel.stateFlow.collectAsState().value,
         onProductListEvent = productListViewModel.eventHandler,
+        productListEffect = productListViewModel.effectFlow,
         favoriteListState = favoriteListViewModel.stateFlow.collectAsState().value,
         onFavoriteListEvent = favoriteListViewModel.eventHandler,
+        favoriteListEffect = favoriteListViewModel.effectFlow,
     )
 }
 
@@ -69,8 +46,10 @@ private fun HomeScreen(
     onHomeEvent: (HomeContract.Event) -> Unit,
     productListState: ProductListContract.State,
     onProductListEvent: (ProductListContract.Event) -> Unit,
+    productListEffect: Flow<ProductListContract.Effect>,
     favoriteListState: FavoriteListContract.State,
     onFavoriteListEvent: (FavoriteListContract.Event) -> Unit,
+    favoriteListEffect: Flow<FavoriteListContract.Effect>,
 ) {
     Column(
         modifier = Modifier
@@ -93,11 +72,13 @@ private fun HomeScreen(
                 isVisible = homeState.selectedTab == HomeContract.State.Tab.PRODUCT,
                 state = productListState,
                 onEvent = onProductListEvent,
+                effect = productListEffect,
             )
             FavoriteList(
                 isVisible = homeState.selectedTab == HomeContract.State.Tab.FAVORITE,
                 state = favoriteListState,
                 onEvent = onFavoriteListEvent,
+                effect = favoriteListEffect,
             )
         }
     }
@@ -117,11 +98,13 @@ private fun Preview() {
                 products = emptyList(),
             ),
             onProductListEvent = {},
+            productListEffect = flowOf(),
             favoriteListState = FavoriteListContract.State(
                 keyword = "",
                 products = emptyList(),
             ),
             onFavoriteListEvent = {},
+            favoriteListEffect = flowOf(),
         )
     }
 }

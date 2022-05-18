@@ -30,8 +30,10 @@ android {
 dependencies {
     implementation(project(Deps.Module.DOMAIN))
     implementation(project(Deps.Module.KT_UTIL))
+    implementation(project(Deps.Module.AOS_UTIL))
     implementation(project(Deps.Module.MVI))
     implementation(project(Deps.Module.DESIGN_SYS))
+    implementation(project(Deps.Module.NAVIGATION))
     implementation(project(Deps.Module.THIRD_PARTY))
     implementation(project(Deps.Module.PROD_LIST))
 
