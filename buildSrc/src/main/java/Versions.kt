@@ -1,14 +1,14 @@
 object Versions {
 
-    const val AGP = "7.1.0-beta04"
+    const val AGP = "7.2.0"
 
     object JavaX {
         const val INJECT = "1"
     }
 
     object Kotlin {
-        const val KOTLIN = "1.5.31"
-        const val KOTLIN_COROUTINE = "1.5.2"
+        const val KOTLIN = "1.6.10"
+        const val KOTLIN_COROUTINE = "1.6.0"
     }
 
     object Jetpack {
@@ -20,7 +20,7 @@ object Versions {
         const val APP_COMPAT = "1.2.0"
         const val HILT = "2.38.1"
         const val HILT_NAVIGATION_COMPOSE = "1.0.0-alpha03"
-        const val COMPOSE = "1.1.0-beta02"
+        const val COMPOSE = "1.1.1"
     }
 
     object GMS {
