@@ -14,42 +14,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.prodlist.designsys.divider.RowDivider
 import com.example.prodlist.designsys.theme.ProdListTheme
 import com.example.prodlist.favorite.FavoriteList
-import com.example.prodlist.favorite.FavoriteListContract
-import com.example.prodlist.favorite.FavoriteListViewModel
 import com.example.prodlist.prodlist.ProductList
-import com.example.prodlist.prodlist.ProductListContract
-import com.example.prodlist.prodlist.ProductListViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun HomeScreen() {
-    val homeViewModel = hiltViewModel<HomeViewModel>()
-    val productListViewModel = hiltViewModel<ProductListViewModel>()
-    val favoriteListViewModel = hiltViewModel<FavoriteListViewModel>()
+    val viewModel = hiltViewModel<HomeViewModel>()
 
     HomeScreen(
-        homeState = homeViewModel.stateFlow.collectAsState().value,
-        onHomeEvent = homeViewModel.eventHandler,
-        productListState = productListViewModel.stateFlow.collectAsState().value,
-        onProductListEvent = productListViewModel.eventHandler,
-        productListEffect = productListViewModel.effectFlow,
-        favoriteListState = favoriteListViewModel.stateFlow.collectAsState().value,
-        onFavoriteListEvent = favoriteListViewModel.eventHandler,
-        favoriteListEffect = favoriteListViewModel.effectFlow,
+        state = viewModel.stateFlow.collectAsState().value,
+        onEvent = viewModel.eventHandler,
     )
 }
 
 @Composable
 private fun HomeScreen(
-    homeState: HomeContract.State,
-    onHomeEvent: (HomeContract.Event) -> Unit,
-    productListState: ProductListContract.State,
-    onProductListEvent: (ProductListContract.Event) -> Unit,
-    productListEffect: Flow<ProductListContract.Effect>,
-    favoriteListState: FavoriteListContract.State,
-    onFavoriteListEvent: (FavoriteListContract.Event) -> Unit,
-    favoriteListEffect: Flow<FavoriteListContract.Effect>,
+    state: HomeContract.State,
+    onEvent: (HomeContract.Event) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -57,8 +37,8 @@ private fun HomeScreen(
             .background(Color.White),
     ) {
         Tabs(
-            selectedTab = homeState.selectedTab,
-            onTabClicked = { tab -> onHomeEvent(HomeContract.Event.OnTabClicked(tab)) },
+            selectedTab = state.selectedTab,
+            onTabClicked = { tab -> onEvent(HomeContract.Event.OnTabClicked(tab)) },
         )
 
         RowDivider()
@@ -68,18 +48,8 @@ private fun HomeScreen(
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            ProductList(
-                isVisible = homeState.selectedTab == HomeContract.State.Tab.PRODUCT,
-                state = productListState,
-                onEvent = onProductListEvent,
-                effect = productListEffect,
-            )
-            FavoriteList(
-                isVisible = homeState.selectedTab == HomeContract.State.Tab.FAVORITE,
-                state = favoriteListState,
-                onEvent = onFavoriteListEvent,
-                effect = favoriteListEffect,
-            )
+            ProductList(isVisible = (state.selectedTab == HomeContract.State.Tab.PRODUCT))
+            FavoriteList(isVisible = (state.selectedTab == HomeContract.State.Tab.FAVORITE))
         }
     }
 }
@@ -89,22 +59,10 @@ private fun HomeScreen(
 private fun Preview() {
     ProdListTheme {
         HomeScreen(
-            homeState = HomeContract.State(
+            state = HomeContract.State(
                 selectedTab = HomeContract.State.Tab.PRODUCT,
             ),
-            onHomeEvent = {},
-            productListState = ProductListContract.State(
-                categories = emptyList(),
-                products = emptyList(),
-            ),
-            onProductListEvent = {},
-            productListEffect = flowOf(),
-            favoriteListState = FavoriteListContract.State(
-                keyword = "",
-                products = emptyList(),
-            ),
-            onFavoriteListEvent = {},
-            favoriteListEffect = flowOf(),
+            onEvent = {},
         )
     }
 }

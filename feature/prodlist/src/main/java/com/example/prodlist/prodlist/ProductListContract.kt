@@ -4,7 +4,7 @@ import com.example.prodlist.mvi.UiEffect
 import com.example.prodlist.mvi.UiEvent
 import com.example.prodlist.mvi.UiState
 
-interface ProductListContract {
+internal interface ProductListContract {
 
     sealed interface Event : UiEvent {
         data class OnCategoryClicked(val categoryKey: String) : Event

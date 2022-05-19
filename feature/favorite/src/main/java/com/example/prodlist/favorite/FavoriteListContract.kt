@@ -4,7 +4,7 @@ import com.example.prodlist.mvi.UiEffect
 import com.example.prodlist.mvi.UiEvent
 import com.example.prodlist.mvi.UiState
 
-interface FavoriteListContract {
+internal interface FavoriteListContract {
 
     sealed interface Event : UiEvent {
         data class OnKeywordChanged(val keyword: String) : Event

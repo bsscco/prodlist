@@ -8,30 +8,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.prodlist.aosutil.navigation.LocalNavController
 import com.example.prodlist.aosutil.toast.showToast
 import com.example.prodlist.designsys.divider.RowDivider
 import com.example.prodlist.designsys.transition.FadeIn
 import com.example.prodlist.navigation.Uris
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 @Composable
-fun ProductList(
-    isVisible: Boolean,
-    state: ProductListContract.State,
-    onEvent: (ProductListContract.Event) -> Unit,
-    effect: Flow<ProductListContract.Effect>,
-) {
+fun ProductList(isVisible: Boolean) {
+    val viewModel = hiltViewModel<ProductListViewModel>()
     val context = LocalContext.current
     val navController = LocalNavController.current
 
     LaunchedEffect(true) {
-        effect.collect { effect ->
+        viewModel.effectFlow.collect { effect ->
             when (effect) {
                 is ProductListContract.Effect.NavigateToProductDetail -> navController.navigate("${Uris.ProdList.PRODUCT_DETAIL}?key=${effect.productKey}".toUri())
                 is ProductListContract.Effect.ShowErrorToast -> context.showToast(effect.message)
@@ -39,6 +35,19 @@ fun ProductList(
         }
     }
 
+    ProductList(
+        isVisible = isVisible,
+        state = viewModel.stateFlow.collectAsState().value,
+        onEvent = viewModel.eventHandler,
+    )
+}
+
+@Composable
+private fun ProductList(
+    isVisible: Boolean,
+    state: ProductListContract.State,
+    onEvent: (ProductListContract.Event) -> Unit,
+) {
     FadeIn(
         modifier = Modifier.fillMaxSize(),
         visible = isVisible,
@@ -132,6 +141,5 @@ private fun Preview() {
             ),
         ),
         onEvent = {},
-        effect = flowOf(),
     )
 }

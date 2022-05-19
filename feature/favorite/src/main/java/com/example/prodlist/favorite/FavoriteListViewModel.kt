@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteListViewModel @Inject constructor(
+internal class FavoriteListViewModel @Inject constructor(
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
     private val savedState: SavedStateHandle,
     private val loadProductsUseCase: LoadProductsUseCase,
