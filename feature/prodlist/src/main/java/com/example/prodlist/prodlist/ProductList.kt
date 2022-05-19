@@ -43,7 +43,7 @@ fun ProductList(isVisible: Boolean) {
 }
 
 @Composable
-private fun ProductList(
+fun ProductList(
     isVisible: Boolean,
     state: ProductListContract.State,
     onEvent: (ProductListContract.Event) -> Unit,

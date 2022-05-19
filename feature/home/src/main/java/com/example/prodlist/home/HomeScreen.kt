@@ -1,10 +1,7 @@
 package com.example.prodlist.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -14,7 +11,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.prodlist.designsys.divider.RowDivider
 import com.example.prodlist.designsys.theme.ProdListTheme
 import com.example.prodlist.favorite.FavoriteList
+import com.example.prodlist.favorite.FavoriteListContract
 import com.example.prodlist.prodlist.ProductList
+import com.example.prodlist.prodlist.ProductListContract
 
 @Composable
 fun HomeScreen() {
@@ -23,13 +22,17 @@ fun HomeScreen() {
     HomeScreen(
         state = viewModel.stateFlow.collectAsState().value,
         onEvent = viewModel.eventHandler,
-    )
+    ) { state ->
+        ProductList(isVisible = (state.selectedTab == HomeContract.State.Tab.PRODUCT))
+        FavoriteList(isVisible = (state.selectedTab == HomeContract.State.Tab.FAVORITE))
+    }
 }
 
 @Composable
 private fun HomeScreen(
     state: HomeContract.State,
     onEvent: (HomeContract.Event) -> Unit,
+    tabsContent: @Composable BoxScope.(HomeContract.State) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -48,8 +51,7 @@ private fun HomeScreen(
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            ProductList(isVisible = (state.selectedTab == HomeContract.State.Tab.PRODUCT))
-            FavoriteList(isVisible = (state.selectedTab == HomeContract.State.Tab.FAVORITE))
+            tabsContent(state)
         }
     }
 }
@@ -63,6 +65,47 @@ private fun Preview() {
                 selectedTab = HomeContract.State.Tab.PRODUCT,
             ),
             onEvent = {},
-        )
+        ) { state ->
+            ProductList(
+                isVisible = (state.selectedTab == HomeContract.State.Tab.PRODUCT),
+                state = ProductListContract.State(
+                    categories = listOf(
+                        ProductListContract.State.Category(
+                            categoryKey = "1",
+                            name = "카테1",
+                            selected = false,
+                        ),
+                        ProductListContract.State.Category(
+                            categoryKey = "2",
+                            name = "카테고2",
+                            selected = true,
+                        ),
+                    ),
+                    products = listOf(
+                        ProductListContract.State.Product(
+                            productKey = "1",
+                            name = "상품1",
+                            price = 10000,
+                            liked = false,
+                        ),
+                        ProductListContract.State.Product(
+                            productKey = "2",
+                            name = "상품2",
+                            price = 10000,
+                            liked = true,
+                        ),
+                    ),
+                ),
+                onEvent = {},
+            )
+            FavoriteList(
+                isVisible = (state.selectedTab == HomeContract.State.Tab.FAVORITE),
+                state = FavoriteListContract.State(
+                    keyword = "",
+                    products = emptyList(),
+                ),
+                onEvent = {},
+            )
+        }
     }
 }

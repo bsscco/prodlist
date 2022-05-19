@@ -42,7 +42,7 @@ fun FavoriteList(isVisible: Boolean) {
 }
 
 @Composable
-private fun FavoriteList(
+fun FavoriteList(
     isVisible: Boolean,
     state: FavoriteListContract.State,
     onEvent: (FavoriteListContract.Event) -> Unit,
