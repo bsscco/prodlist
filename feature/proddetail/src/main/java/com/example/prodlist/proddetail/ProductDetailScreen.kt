@@ -17,7 +17,6 @@ import com.example.prodlist.designsys.divider.RowDivider
 import com.example.prodlist.proddetail.noproduct.NoProductContract
 import com.example.prodlist.proddetail.noproduct.NoProductModal
 import com.example.prodlist.proddetail.noproduct.NoProductViewModel
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun ProductDetailScreen(productKey: String) {
@@ -46,14 +45,23 @@ fun ProductDetailScreen(productKey: String) {
     }
 
     ProductDetailScreen(
-        state = productDetailViewModel.stateFlow.collectAsState().value,
-        onEvent = productDetailViewModel.eventHandler,
+        productDetailState = productDetailViewModel.stateFlow.collectAsState().value,
+        onProductDetailEvent = productDetailViewModel.eventHandler,
+        noProductState = noProductViewModel.stateFlow.collectAsState().value,
+        onNoProductEvent = noProductViewModel.eventHandler,
     )
+}
 
-    NoProductModal(
-        state = noProductViewModel.stateFlow.collectAsState().value,
-        onEvent = noProductViewModel.eventHandler,
-    )
+@Composable
+private fun ProductDetailScreen(
+    productDetailState: ProductDetailContract.State,
+    onProductDetailEvent: (ProductDetailContract.Event) -> Unit,
+    noProductState: NoProductContract.State,
+    onNoProductEvent: (NoProductContract.Event) -> Unit,
+) {
+    ProductDetailScreen(productDetailState, onProductDetailEvent)
+
+    NoProductModal(noProductState, onNoProductEvent)
 }
 
 @Composable
